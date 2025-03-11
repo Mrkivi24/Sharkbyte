@@ -24,7 +24,7 @@
             {% if 'username' in session %}
                 <a href="{{ url_for('create_post') }}" class="btn">Create Post</a>
                 <a href="{{ url_for('my_posts') }}" class="btn">My Posts</a>
-                <a href="{{ url_for('/') }}" class="btn">Posts</a>
+                <a href="{{ url_for('/all_posts') }}" class="btn">Posts</a>
             {% endif %}
         </aside>
         <main>
