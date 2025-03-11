@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h2>My Posts</h2>
+    <div class="posts">
+        {% for post in posts %}
+            <div class="post">
+                <h3>{{ post[1] }}</h3>
+                <p>{{ post[2][:100] }}{% if post[2]|length > 100 %}...{% endif %}</p>
+                <p>Likes: {{ post[3] }}</p>
+                <a href="{{ url_for('view_post', post_id=post[0]) }}" class="btn">View Post</a>
+                <a href="{{ url_for('edit_post', post_id=post[0]) }}" class="btn">Edit</a>
+                <a href="{{ url_for('delete_post', post_id=post[0]) }}" class="btn delete-btn">Delete</a>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

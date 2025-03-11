@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sharkbyte</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Sharkbyte</h1>
+        <nav>
+            {% if 'username' in session %}
+                <span>Welcome, {{ session['username'] }}</span>
+                <a href="{{ url_for('logout') }}">Logout</a>
+            {% else %}
+                <a href="{{ url_for('login') }}">Login</a>
+                <a href="{{ url_for('register') }}">Register</a>
+            {% endif %}
+        </nav>
+    </header>
+    <div class="container">
+        <aside class="sidebar">
+            {% if 'username' in session %}
+                <a href="{{ url_for('create_post') }}" class="btn">Create Post</a>
+                <a href="{{ url_for('my_posts') }}" class="btn">My Posts</a>
+            {% endif %}
+        </aside>
+        <main>
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+</body>
+</html>
