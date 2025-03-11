@@ -227,6 +227,25 @@ def my_posts():
     conn.close()
     return render_template('my_posts.html', posts=posts)
 
+# View all posts with search functionality
+@app.route('/all_posts')
+def all_posts():
+    search_query = request.args.get('search', '')  # Get the search query from the URL
+    conn = sqlite3.connect('database.db')
+    c = conn.cursor()
+    if search_query:
+        # Search for posts where the title or content matches the query
+        c.execute('''SELECT posts.id, posts.title, posts.content, posts.likes, users.username 
+                     FROM posts JOIN users ON posts.user_id = users.id 
+                     WHERE posts.title LIKE ? OR posts.content LIKE ?''', (f'%{search_query}%', f'%{search_query}%'))
+    else:
+        # Fetch all posts if no search query is provided
+        c.execute('''SELECT posts.id, posts.title, posts.content, posts.likes, users.username 
+                     FROM posts JOIN users ON posts.user_id = users.id''')
+    posts = c.fetchall()
+    conn.close()
+    return render_template('all_posts.html', posts=posts, search_query=search_query)
+
 if __name__ == '__main__':
     init_db()
     app.run(debug=False, host='0.0.0.0', port=5000)
